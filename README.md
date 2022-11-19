@@ -1,3 +1,10 @@
+# QDo_Frontend Create React App
+
+Frontend Source code of `QDo` ToDo list Web Application. 
+
+QDo is a web application to manage todo lists with different status(Todo, In Progress and Done)a
+
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
