@@ -200,8 +200,6 @@ export default function Pricing() {
               <Grid container spacing={2}>
                 <Grid item xs={3}>
                   <Autocomplete
-                    // className="m-2 w-full"
-                    // style={{ marginRight: 10 }}
                     label="Task Status"
                     options={["Todo", "Inprogress", "Done"]}
                     getOptionLabel={(opt) => opt}
@@ -229,8 +227,6 @@ export default function Pricing() {
                 </Grid>
                 <Grid item xs={3}>
                   <TextValidator
-                    // className="w-full m-2"
-                    // style={{ marginRight: 10 }}
                     fullWidth
                     variant="outlined"
                     size="small"
@@ -243,8 +239,6 @@ export default function Pricing() {
                 </Grid>
                 <Grid item xs={3}>
                   <TextValidator
-                    // className="w-full m-2"
-                    // style={{ marginRight: 10 }}
                     fullWidth
                     variant="outlined"
                     size="small"
@@ -261,7 +255,6 @@ export default function Pricing() {
                     fullWidth
                     color="primary"
                     variant="contained"
-                    // className="m-2"
                   >
                     Filter
                   </Button>
@@ -274,7 +267,6 @@ export default function Pricing() {
                     }}
                     color="secondary"
                     variant="contained"
-                    // className="m-2"
                   >
                     Reset
                   </Button>
@@ -355,10 +347,10 @@ export default function Pricing() {
                               <PlaylistAddCheckIcon />
                             </ToggleButton>
                           </ToggleButtonGroup>
-                          
                         </div>
                         {/* Date */}
-                        <div style={{
+                        <div
+                          style={{
                             textAlign: "right",
                             marginTop: "15px",
                           }}

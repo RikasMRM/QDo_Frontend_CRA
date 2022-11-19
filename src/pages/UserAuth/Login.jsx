@@ -69,7 +69,7 @@ export default function Login() {
       marginTop={6}
     >
       <Paper className={classes.paper}>
-      <img src={logo} className="App-logo" alt="logo" height="100px" />
+      <img src={logo} className="App-logo" alt="logo" height="150px" />
         <Typography variant="h5" className={classes.titleText}>
           LOGIN
         </Typography>
