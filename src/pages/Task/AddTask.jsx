@@ -3,9 +3,11 @@ import { Alert } from "@material-ui/lab";
 import axios from "axios";
 import React, { useState } from "react";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
-import LoadingDialog from "../components/widget/LoadingDialog";
-import { BACKEND_API_ENDPOINT } from "../services/AppConst";
-import LocalStorageService from "../services/LocalStorageService";
+import LoadingDialog from "../../components/widget/LoadingDialog";
+import { BACKEND_API_ENDPOINT } from "../../services/AppConst";
+import LocalStorageService from "../../services/LocalStorageService";
+
+import useStyles from "./styles";
 
 function AddTask() {
   const [loading, setLoading] = useState(false);

@@ -2,10 +2,10 @@ import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./auth/AuthRoute";
 import NavBar from "./components/common/Navbar/NavBar";
 import NotFound from "./components/common/NotFount";
-import Dashboard from "./pages/Dashboard";
+import Dashboard from "./pages/Dashboard/Dashboard";
 import Login from "./pages/UserAuth/Login";
 import Register from "./pages/UserAuth/Register";
-import AddTask from "./pages/AddTask";
+import AddTask from "./pages/Task/AddTask";
 
 function App() {
   return (

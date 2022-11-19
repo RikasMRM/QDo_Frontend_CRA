@@ -16,9 +16,9 @@ import Container from "@material-ui/core/Container";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
 import { IconButton, Snackbar } from "@material-ui/core";
 import axios from "axios";
-import { BACKEND_API_ENDPOINT } from "../services/AppConst";
-import LocalStorageService from "../services/LocalStorageService";
-import LoadingDialog from "../components/widget/LoadingDialog";
+import { BACKEND_API_ENDPOINT } from "../../services/AppConst";
+import LocalStorageService from "../../services/LocalStorageService";
+import LoadingDialog from "../../components/widget/LoadingDialog";
 import {
   Alert,
   Autocomplete,
@@ -30,29 +30,7 @@ import AutorenewIcon from "@material-ui/icons/Autorenew";
 import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
-const useStyles = makeStyles((theme) => ({
-  heroContent: {
-    padding: theme.spacing(8, 0, 6),
-  },
-  cardHeader: {
-    backgroundColor:
-      theme.palette.type === "light"
-        ? theme.palette.grey[200]
-        : theme.palette.grey[700],
-  },
-  tDescription: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "baseline",
-    marginBottom: theme.spacing(2),
-  },
-  iconAttachment: {
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "baseline",
-    marginBottom: theme.spacing(2),
-  },
-}));
+import useStyles from "./styles";
 
 export default function Pricing() {
   const classes = useStyles();
@@ -215,13 +193,7 @@ export default function Pricing() {
             component="main"
             className={classes.heroContent}
           >
-            <Typography
-              component="h1"
-              variant="h2"
-              align="center"
-              color="textPrimary"
-              gutterBottom
-            >
+            <Typography align="center" gutterBottom className={classes.title}>
               My Tasks
             </Typography>
           </Container>
@@ -231,14 +203,15 @@ export default function Pricing() {
             maxWidth="sm"
             component="main"
             className={classes.heroContent}
+            spacing={3}
           >
-            <Grid container>
-              <Grid item lg={12} md={12} sm={12} xs={12}>
+            <Grid container spacing={3}>
+              <Grid item lg={12} md={12} sm={12} xs={12} spacing={3}>
                 <ValidatorForm onSubmit={filterTasks} key={formKey}>
-                  <Grid container>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                  <Grid container spacing={3} mr={10}>
                       <Autocomplete
                         className="m-2 w-full"
+                        style={{marginRight:10}}
                         label="Task Status"
                         options={["Todo", "Inprogress", "Done"]}
                         getOptionLabel={(opt) => opt}
@@ -262,10 +235,9 @@ export default function Pricing() {
                           />
                         )}
                       />
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
                       <TextValidator
                         className="w-full m-2"
+                        style={{marginRight:10}}
                         variant="outlined"
                         size="small"
                         helperText="Start Date"
@@ -274,10 +246,9 @@ export default function Pricing() {
                         type="date"
                         name="startDate"
                       />
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
                       <TextValidator
                         className="w-full m-2"
+                        style={{marginRight:10}}
                         variant="outlined"
                         size="small"
                         helperText="End Date"
@@ -286,8 +257,7 @@ export default function Pricing() {
                         type="date"
                         name="endDate"
                       />
-                    </Grid>
-                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <Grid className={classes.test}>
                       <Button
                         type="submit"
                         color="primary"
@@ -306,8 +276,8 @@ export default function Pricing() {
                       >
                         Reset
                       </Button>
+                      </Grid>
                     </Grid>
-                  </Grid>
                 </ValidatorForm>
               </Grid>
             </Grid>
@@ -381,6 +351,7 @@ export default function Pricing() {
                               <PlaylistAddCheckIcon />
                             </ToggleButton>
                           </ToggleButtonGroup>
+                          
                         </div>
                         {/* Date */}
                         <div style={{ textAlign: "right", marginTop: "15px" }}>

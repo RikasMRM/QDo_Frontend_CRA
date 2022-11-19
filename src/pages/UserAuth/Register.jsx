@@ -9,7 +9,6 @@ import { BACKEND_API_ENDPOINT } from "../../services/AppConst";
 import { Alert } from "@material-ui/lab";
 
 import logo from "../../assets/logo/logo-L.png";
-import "../styles.css";
 import useStyles from "./styles";
 
 export default function Register() {

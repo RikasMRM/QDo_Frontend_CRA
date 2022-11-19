@@ -13,7 +13,6 @@ import { BACKEND_API_ENDPOINT } from "../../services/AppConst";
 import LocalStorageService from "../../services/LocalStorageService";
 import { useAuth } from "../../context/AuthContext";
 import logo from "../../assets/logo/logo-L.png";
-import "../styles.css";
 import useStyles from "./styles";
 
 export default function Login() {
