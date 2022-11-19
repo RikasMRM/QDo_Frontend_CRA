@@ -14,24 +14,21 @@ import Link from "@material-ui/core/Link";
 import { makeStyles } from "@material-ui/core/styles";
 import Container from "@material-ui/core/Container";
 import InsertDriveFileIcon from "@material-ui/icons/InsertDriveFile";
-import { IconButton } from "@material-ui/core";
+import { IconButton, Snackbar } from "@material-ui/core";
 import axios from "axios";
 import { BACKEND_API_ENDPOINT } from "../services/AppConst";
 import LocalStorageService from "../services/LocalStorageService";
 import LoadingDialog from "../components/widget/LoadingDialog";
-
-function Copyright() {
-  return (
-    <Typography variant="body2" color="textSecondary" align="center">
-      {"Copyright © "}
-      <Link color="inherit" href="https://mui.com/">
-        Your Website
-      </Link>{" "}
-      {new Date().getFullYear()}
-      {"."}
-    </Typography>
-  );
-}
+import {
+  Alert,
+  Autocomplete,
+  ToggleButton,
+  ToggleButtonGroup,
+} from "@material-ui/lab";
+import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
+import AutorenewIcon from "@material-ui/icons/Autorenew";
+import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const useStyles = makeStyles((theme) => ({
   heroContent: {
@@ -60,8 +57,16 @@ const useStyles = makeStyles((theme) => ({
 export default function Pricing() {
   const classes = useStyles();
 
+  const [formKey, setFormKey] = useState(false);
+  const [filterData, setFilterData] = useState({});
+
   const [loading, setLoading] = useState(true);
   const [allTasks, setAllTasks] = useState([]);
+
+  // snackbar
+  const [openSnackbar, handleSnackbar] = useState(false);
+  const [snackbarSeverity, handleSnackbarSeverity] = useState("");
+  const [snackbarMessage, handleSnackbarMessage] = useState("");
 
   const viewAttachment = async (id) => {
     //token
@@ -95,6 +100,106 @@ export default function Pricing() {
     }
   };
 
+  const handleAlignment = async (v, tID) => {
+    setLoading(true);
+    const taskID = tID;
+    const newValue = v;
+    const accessToken = LocalStorageService.getItem("accessToken");
+    var config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    await axios
+      .put(
+        BACKEND_API_ENDPOINT + "tasks/" + taskID,
+        {
+          status: newValue,
+        },
+        config
+      )
+      .then((res) => {
+        if (res.status == 200 && res.data.success) {
+          handleSnackbar(true);
+          handleSnackbarSeverity("success");
+          handleSnackbarMessage("Status Updated!");
+          // setLoading(false);
+          getAllUserTasks();
+        } else {
+          handleSnackbar(true);
+          handleSnackbarSeverity("error");
+          handleSnackbarMessage("Error Uploading Status!");
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        handleSnackbar(true);
+        handleSnackbarSeverity("error");
+        handleSnackbarMessage("Error!");
+        setLoading(false);
+      });
+  };
+
+  const handleChange = (e) => {
+    var name = e.target.name;
+    var value = e.target.value;
+    // console.log(e)
+    let temp = { ...filterData };
+    temp[name] = value;
+    setFilterData(temp);
+    // console.log(documentInfo)
+  };
+
+  const resetFilter = () => {
+    setLoading(true);
+    setFilterData({});
+    setFormKey(!formKey);
+    getAllUserTasks();
+  };
+
+  const filterTasks = async () => {
+    console.log(filterData);
+
+    const accessToken = LocalStorageService.getItem("accessToken");
+    var config = {
+      headers: {
+        Authorization: `Bearer ${accessToken}`,
+      },
+    };
+
+    // endDate: "2022-11-30";
+    // startDate: "2022-11-01";
+    // status: "Todo";
+
+    await axios
+      .post(BACKEND_API_ENDPOINT + "tasks/filter", filterData, config)
+      .then((res) => {
+        if (res.status == 200 && res.data.length > 0) {
+          setAllTasks(res.data);
+          setLoading(false);
+        } else if (res.data.length == 0) {
+          handleSnackbar(true);
+          handleSnackbarSeverity("error");
+          handleSnackbarMessage("No data found!");
+          setLoading(false);
+        } else {
+          handleSnackbar(true);
+          handleSnackbarSeverity("error");
+          handleSnackbarMessage("Error!");
+          setLoading(false);
+        }
+      })
+      .catch((e) => {
+        console.log(e);
+        handleSnackbar(true);
+        handleSnackbarSeverity("error");
+        handleSnackbarMessage("Error!");
+        setLoading(false);
+      });
+  };
+
   useEffect(() => {
     getAllUserTasks();
   }, []);
@@ -120,10 +225,99 @@ export default function Pricing() {
               My Tasks
             </Typography>
           </Container>
-          {allTasks && allTasks.length > 0 ? (
-            allTasks.map((task) => (
-              <Container maxWidth="md" component="main">
-                <Grid container spacing={5} alignItems="flex-end">
+
+          {/* Filter */}
+          <Container
+            maxWidth="sm"
+            component="main"
+            className={classes.heroContent}
+          >
+            <Grid container>
+              <Grid item lg={12} md={12} sm={12} xs={12}>
+                <ValidatorForm onSubmit={filterTasks} key={formKey}>
+                  <Grid container>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <Autocomplete
+                        className="m-2 w-full"
+                        label="Task Status"
+                        options={["Todo", "Inprogress", "Done"]}
+                        getOptionLabel={(opt) => opt}
+                        size="small"
+                        name="status"
+                        onChange={(e, v) =>
+                          handleChange({
+                            target: {
+                              name: "status",
+                              value: v,
+                            },
+                          })
+                        }
+                        renderInput={(params) => (
+                          <TextValidator
+                            {...params}
+                            variant="outlined"
+                            label="Task Status"
+                            helperText="Task Status"
+                            value={filterData.status}
+                          />
+                        )}
+                      />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <TextValidator
+                        className="w-full m-2"
+                        variant="outlined"
+                        size="small"
+                        helperText="Start Date"
+                        onChange={handleChange}
+                        value={filterData.startDate}
+                        type="date"
+                        name="startDate"
+                      />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <TextValidator
+                        className="w-full m-2"
+                        variant="outlined"
+                        size="small"
+                        helperText="End Date"
+                        onChange={handleChange}
+                        value={filterData.endDate}
+                        type="date"
+                        name="endDate"
+                      />
+                    </Grid>
+                    <Grid item lg={6} md={6} sm={12} xs={12}>
+                      <Button
+                        type="submit"
+                        color="primary"
+                        variant="contained"
+                        className="m-2"
+                      >
+                        Filter
+                      </Button>
+                      <Button
+                        onClick={() => {
+                          resetFilter();
+                        }}
+                        color="secondary"
+                        variant="contained"
+                        className="m-2"
+                      >
+                        Reset
+                      </Button>
+                    </Grid>
+                  </Grid>
+                </ValidatorForm>
+              </Grid>
+            </Grid>
+          </Container>
+
+          {/* Cards */}
+          <Container maxWidth="md" component="main">
+            <Grid container spacing={5} alignItems="flex-end">
+              {allTasks && allTasks.length > 0 ? (
+                allTasks.map((task) => (
                   <Grid item xs={12} sm={6} md={4}>
                     <Card>
                       <CardHeader
@@ -140,15 +334,16 @@ export default function Pricing() {
                           </Typography>
                         </div>
                         <div>
-                          <Typography variant="h6" color="textSecondary">
-                            {task.status}
+                          <Typography variant="p" color="textSecondary">
+                            Current Status: {task.status}
                           </Typography>
                         </div>
                         {task.filePath && (
-                          <div className={classes.iconAttachment}>
+                          <div>
+                            Attachment:
                             <IconButton
                               color="primary"
-                              aria-label="attached document"
+                              aria-label="attached picture"
                               component="span"
                               onClick={() => viewAttachment(task._id)}
                             >
@@ -156,7 +351,39 @@ export default function Pricing() {
                             </IconButton>
                           </div>
                         )}
-                        <div style={{ textAlign: "right" }}>
+                        {/* toggle button */}
+                        <div>
+                          Change Status:
+                          {/* Todo | Inprogress | Done */}
+                          <ToggleButtonGroup
+                            className="mt-2"
+                            value={task.status}
+                            exclusive
+                            onChange={(e, v) => handleAlignment(v, task._id)}
+                            aria-label="text alignment"
+                          >
+                            <ToggleButton
+                              value="Todo"
+                              aria-label="left aligned"
+                            >
+                              <FormatListBulletedIcon />
+                            </ToggleButton>
+                            <ToggleButton
+                              value="Inprogress"
+                              aria-label="centered"
+                            >
+                              <AutorenewIcon />
+                            </ToggleButton>
+                            <ToggleButton
+                              value="Done"
+                              aria-label="right aligned"
+                            >
+                              <CheckCircleIcon />
+                            </ToggleButton>
+                          </ToggleButtonGroup>
+                        </div>
+                        {/* Date */}
+                        <div style={{ textAlign: "right", marginTop: "15px" }}>
                           <Typography variant="p" color="textSecondary">
                             Date : {task.createdAt.split("T")[0]}
                           </Typography>
@@ -164,19 +391,34 @@ export default function Pricing() {
                       </CardContent>
                     </Card>
                   </Grid>
-                </Grid>
-              </Container>
-            ))
-          ) : (
-            <Container maxWidth="md" component="main">
-              <Grid container spacing={5} alignItems="center">
-                <Grid item xs={12} sm={12} md={12}>
-                  <Typography variant="h6" color="textSecondary">
-                    No Data Found!
-                  </Typography>
-                </Grid>
-              </Grid>
-            </Container>
+                ))
+              ) : (
+                <Container maxWidth="md" component="main">
+                  <Grid container spacing={5} alignItems="center">
+                    <Grid item xs={12} sm={12} md={12}>
+                      <Typography variant="h6" color="textSecondary">
+                        No Data Found!
+                      </Typography>
+                    </Grid>
+                  </Grid>
+                </Container>
+              )}
+            </Grid>
+          </Container>
+
+          {openSnackbar && (
+            <Snackbar
+              open={openSnackbar}
+              autoHideDuration={2500}
+              onClose={() => handleSnackbar(false)}
+            >
+              <Alert
+                onClose={() => handleSnackbar(false)}
+                severity={snackbarSeverity}
+              >
+                {snackbarMessage}
+              </Alert>
+            </Snackbar>
           )}
         </React.Fragment>
       )}

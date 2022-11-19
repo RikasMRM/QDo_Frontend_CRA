@@ -1,6 +1,5 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./auth/AuthRoute";
-import Footer from "./components/common/Footer";
 import NavBar from "./components/common/NavBar";
 import NotFound from "./components/common/NotFount";
 import Dashboard from "./pages/Dashboard";
@@ -31,7 +30,6 @@ function App() {
 
           <Route path="*" component={() => <Redirect to="/session/404" />} />
         </Switch>
-        <Footer />
       </BrowserRouter>
     </div>
   );
