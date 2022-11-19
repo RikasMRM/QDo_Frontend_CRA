@@ -49,7 +49,7 @@ function AddTask() {
     await axios
       .post(BACKEND_API_ENDPOINT + "tasks", data, config)
       .then((res) => {
-        if (res.status == 201) {
+        if (res.status === 201) {
           messageRes = "Task Creation Success";
           variantRes = "success";
           handleSnackbar(true);

@@ -5,7 +5,7 @@ export const checkUserToken = async (token) => {
   await axios
     .get(BACKEND_API_ENDPOINT + "users/token/" + token)
     .then((res) => {
-      if (res.status == 200) {
+      if (res.status === 200) {
         return true;
       } else {
         return false;

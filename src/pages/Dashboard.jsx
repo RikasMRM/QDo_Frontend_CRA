@@ -86,7 +86,7 @@ export default function Pricing() {
         },
       };
       await axios.get(BACKEND_API_ENDPOINT + "tasks", config).then((res) => {
-        if (res.status == 200 && res.data) {
+        if (res.status === 200 && res.data) {
           // console.log(res.data)
           setAllTasks(res.data);
           setLoading(false);
@@ -120,7 +120,7 @@ export default function Pricing() {
         config
       )
       .then((res) => {
-        if (res.status == 200 && res.data.success) {
+        if (res.status === 200 && res.data.success) {
           handleSnackbar(true);
           handleSnackbarSeverity("success");
           handleSnackbarMessage("Status Updated!");
@@ -176,10 +176,10 @@ export default function Pricing() {
     await axios
       .post(BACKEND_API_ENDPOINT + "tasks/filter", filterData, config)
       .then((res) => {
-        if (res.status == 200 && res.data.length > 0) {
+        if (res.status === 200 && res.data.length > 0) {
           setAllTasks(res.data);
           setLoading(false);
-        } else if (res.data.length == 0) {
+        } else if (res.data.length === 0) {
           handleSnackbar(true);
           handleSnackbarSeverity("error");
           handleSnackbarMessage("No data found!");

@@ -24,7 +24,7 @@ export const AuthProvider = ({ children }) => {
           await axios
             .get(BACKEND_API_ENDPOINT + "users/token/" + accessToken)
             .then((res) => {
-              if (res.status == 200) {
+              if (res.status === 200) {
                 setUser(res.data.user);
               } else {
                 LocalStorageService.removeItem("accessToken");

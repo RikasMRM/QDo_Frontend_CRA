@@ -3,8 +3,8 @@ import { ProtectedRoute } from "./auth/AuthRoute";
 import NavBar from "./components/common/Navbar/NavBar";
 import NotFound from "./components/common/NotFount";
 import Dashboard from "./pages/Dashboard";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
+import Login from "./pages/UserAuth/Login";
+import Register from "./pages/UserAuth/Register";
 import AddTask from "./pages/AddTask";
 
 function App() {
