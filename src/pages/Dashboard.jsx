@@ -27,7 +27,7 @@ import {
 } from "@material-ui/lab";
 import FormatListBulletedIcon from "@material-ui/icons/FormatListBulleted";
 import AutorenewIcon from "@material-ui/icons/Autorenew";
-import CheckCircleIcon from "@material-ui/icons/CheckCircle";
+import PlaylistAddCheckIcon from "@mui/icons-material/PlaylistAddCheck";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 
 const useStyles = makeStyles((theme) => ({
@@ -378,7 +378,7 @@ export default function Pricing() {
                               value="Done"
                               aria-label="right aligned"
                             >
-                              <CheckCircleIcon />
+                              <PlaylistAddCheckIcon />
                             </ToggleButton>
                           </ToggleButtonGroup>
                         </div>

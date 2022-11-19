@@ -1,6 +1,6 @@
 import { BrowserRouter, Redirect, Route, Switch } from "react-router-dom";
 import { ProtectedRoute } from "./auth/AuthRoute";
-import NavBar from "./components/common/NavBar";
+import NavBar from "./components/common/Navbar/NavBar";
 import NotFound from "./components/common/NotFount";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";

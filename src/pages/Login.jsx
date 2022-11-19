@@ -10,7 +10,7 @@ import { BACKEND_API_ENDPOINT } from "../services/AppConst";
 import LocalStorageService from "../services/LocalStorageService";
 import { useAuth } from "../context/AuthContext";
 import logo from "../assets/logo/logo-L.png";
-import "./styles.css"
+import "./styles.css";
 
 const useStyles = makeStyles((theme) => ({
   paper: {
@@ -65,11 +65,10 @@ export default function Login() {
   };
 
   useEffect(() => {
-    if(user){
-      history.push('/')
+    if (user) {
+      history.push("/");
     }
-  },)
-  
+  });
 
   return (
     <ValidatorForm className="mt-4" onSubmit={handleFormSubmit}>
@@ -79,7 +78,7 @@ export default function Login() {
         justifyContent="center"
         direction="column"
       >
-        <img src={logo} className="App-logo" alt="logo"  height="100px"/>
+        <img src={logo} className="App-logo" alt="logo" height="100px" />
         <Typography component="h1" variant="h5">
           User Login
         </Typography>

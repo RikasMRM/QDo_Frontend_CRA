@@ -3,28 +3,12 @@ import AppBar from "@material-ui/core/AppBar";
 import Button from "@material-ui/core/Button";
 import Toolbar from "@material-ui/core/Toolbar";
 import Link from "@material-ui/core/Link";
-import { makeStyles } from "@material-ui/core/styles";
-import LocalStorageService from "../../services/LocalStorageService";
+import LocalStorageService from "../../../services/LocalStorageService";
 import { useHistory } from "react-router";
-import { useAuth } from "../../context/AuthContext";
+import { useAuth } from "../../../context/AuthContext";
 
-import logo from "../../assets/logo/logo-L.png";
-import "./styles.css";
-
-const useStyles = makeStyles((theme) => ({
-  appBar: {
-    borderBottom: `1px solid ${theme.palette.divider}`,
-  },
-  toolbar: {
-    flexWrap: "wrap",
-  },
-  toolbarTitle: {
-    flexGrow: 1,
-  },
-  link: {
-    margin: theme.spacing(1, 1.5),
-  },
-}));
+import logo from "../../../assets/logo/logo-L.png";
+import useStyles from "./styles";
 
 export default function NavBar() {
   const classes = useStyles();
@@ -53,11 +37,11 @@ export default function NavBar() {
         className={classes.appBar}
       >
         <Toolbar>
-          <img src={logo} height="50px" className="App-logo" alt="logo" />
+          <img src={logo} height="50px" className={classes.image} alt="logo" />
 
           {user && user.name && (
             <Fragment>
-              <nav>
+              <nav className={classes.nav}>
                 <Link
                   variant="button"
                   color="textPrimary"
@@ -78,7 +62,7 @@ export default function NavBar() {
               <Button
                 color="secondary"
                 variant="outlined"
-                className={classes.link}
+                className={classes.logout}
                 onClick={logout}
               >
                 Logout
