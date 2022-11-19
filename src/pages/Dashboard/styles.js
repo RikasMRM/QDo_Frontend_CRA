@@ -2,10 +2,18 @@ import { makeStyles } from "@material-ui/core/styles";
 
 export default makeStyles((theme) => ({
   heroContent: {
-    padding: theme.spacing(2, 0, 6),
+    padding: theme.spacing(3, 0, 3),
+  },
+  card: {
+    height: "350px !important",
   },
   cardHeader: {
-    background: 'linear-gradient(to right bottom, #6ba3f9, #ac4cd2)',
+    background: "linear-gradient(to right bottom, #6ba3f9, #ac4cd2)",
+    color: "#ffffff",
+    fontWeight: 800,
+  },
+  filters: {
+    marginBottom: "50px",
   },
   iconAttachment: {
     display: "flex",
@@ -14,11 +22,12 @@ export default makeStyles((theme) => ({
     marginBottom: theme.spacing(2),
   },
   title: {
-    color: 'linear-gradient(to right bottom, #6ba3f9, #ac4cd2)',
-    fontSize: 80,
+    color: "#3f51b5",
+    fontSize: 55,
+    fontWeight: 600,
   },
   test: {
-    margin: 'auto',
+    margin: "auto",
     padding: theme.spacing(2, 0, 6),
   },
 }));

@@ -2,6 +2,7 @@ import { Button, Grid, Snackbar, Typography } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import axios from "axios";
 import React, { useState } from "react";
+import Container from "@material-ui/core/Container";
 import { TextValidator, ValidatorForm } from "react-material-ui-form-validator";
 import LoadingDialog from "../../components/widget/LoadingDialog";
 import { BACKEND_API_ENDPOINT } from "../../services/AppConst";
@@ -10,6 +11,7 @@ import LocalStorageService from "../../services/LocalStorageService";
 import useStyles from "./styles";
 
 function AddTask() {
+  const classes = useStyles();
   const [loading, setLoading] = useState(false);
   const [formKey, setFormKey] = useState(false);
 
@@ -114,76 +116,101 @@ function AddTask() {
         <LoadingDialog />
       ) : (
         <div>
-          <ValidatorForm onSubmit={() => handleFormSubmit()} key={formKey}>
-            <Grid
-              container
-              alignContent="center"
-              justifyContent="center"
-              direction="column"
-              className="mt-4"
-            >
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <Typography className="m-4" variant="h5">
-                  Add New Task
-                </Typography>
+          <Container className={classes.heroContent}>
+            <Typography align="center" gutterBottom className={classes.title}>
+              Add New Task
+            </Typography>
+          </Container>
+
+          <Grid
+            container
+            justifyContent="center"
+            alignItems="center"
+            direction="column"
+          >
+            <ValidatorForm onSubmit={() => handleFormSubmit()} key={formKey}>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.textField}
+              >
+                <TextValidator
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  label="Task Name"
+                  onChange={handleChange}
+                  value={taskInfo.name}
+                  type="text"
+                  name="name"
+                  validators={["required"]}
+                  errorMessages={["This field is required"]}
+                />
               </Grid>
-              <Grid item lg={12} md={12} sm={12} xs={12}>
-                <div className="p-8 h-full bg-light-gray relative">
-                  <TextValidator
-                    className="mb-4 w-full"
-                    variant="outlined"
-                    size="small"
-                    label="Task Name"
-                    helperText="Task Name"
-                    onChange={handleChange}
-                    value={taskInfo.name}
-                    type="text"
-                    name="name"
-                    validators={["required"]}
-                    errorMessages={["This field is required"]}
-                  />
-
-                  <TextValidator
-                    className="mb-4 w-full"
-                    variant="outlined"
-                    size="small"
-                    label="Task Description"
-                    helperText="Task Description"
-                    onChange={handleChange}
-                    value={taskInfo.description}
-                    type="text"
-                    multiline
-                    rows={5}
-                    name="description"
-                    validators={["required"]}
-                    errorMessages={["This field is required"]}
-                  />
-
-                  <TextValidator
-                    className="mb-4 w-full"
-                    variant="outlined"
-                    size="small"
-                    helperText="Please upload attachment"
-                    onChange={handleFileUpload}
-                    value={taskInfo.attachment}
-                    type="file"
-                    name="attachment"
-                  />
-
-                  <div className="text-right">
-                    <Button
-                      variant="contained"
-                      color="primary"
-                      disabled={loading}
-                      type="submit"
-                    >
-                      Confirm Upload
-                    </Button>
-                  </div>
-                </div>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.textField}
+              >
+                <TextValidator
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  label="Task Description"
+                  onChange={handleChange}
+                  value={taskInfo.description}
+                  type="text"
+                  multiline
+                  rows={5}
+                  name="description"
+                  validators={["required"]}
+                  errorMessages={["This field is required"]}
+                />
               </Grid>
-            </Grid>
-          </ValidatorForm>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.textField}
+              >
+                <TextValidator
+                  fullWidth
+                  variant="outlined"
+                  size="small"
+                  onChange={handleFileUpload}
+                  value={taskInfo.attachment}
+                  type="file"
+                  name="attachment"
+                />
+              </Grid>
+              <Grid
+                item
+                lg={12}
+                md={12}
+                sm={12}
+                xs={12}
+                className={classes.uploadButton}
+              >
+                <Button
+                  fullWidth
+                  variant="contained"
+                  color="primary"
+                  disabled={loading}
+                  type="submit"
+                >
+                  Confirm Upload
+                </Button>
+              </Grid>
+            </ValidatorForm>
+          </Grid>
 
           {openSnackbar && (
             <Snackbar

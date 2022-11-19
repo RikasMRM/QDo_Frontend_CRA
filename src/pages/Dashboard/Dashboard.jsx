@@ -188,108 +188,112 @@ export default function Pricing() {
         <LoadingDialog />
       ) : (
         <React.Fragment>
-          <Container
-            maxWidth="sm"
-            component="main"
-            className={classes.heroContent}
-          >
+          <Container className={classes.heroContent}>
             <Typography align="center" gutterBottom className={classes.title}>
               My Tasks
             </Typography>
           </Container>
 
           {/* Filter */}
-          <Container
-            maxWidth="sm"
-            component="main"
-            className={classes.heroContent}
-            spacing={3}
-          >
-            <Grid container spacing={3}>
-              <Grid item lg={12} md={12} sm={12} xs={12} spacing={3}>
-                <ValidatorForm onSubmit={filterTasks} key={formKey}>
-                  <Grid container spacing={3} mr={10}>
-                      <Autocomplete
-                        className="m-2 w-full"
-                        style={{marginRight:10}}
+          <Container component="main" className={classes.filters}>
+            <ValidatorForm onSubmit={filterTasks} key={formKey}>
+              <Grid container spacing={2}>
+                <Grid item xs={3}>
+                  <Autocomplete
+                    // className="m-2 w-full"
+                    // style={{ marginRight: 10 }}
+                    label="Task Status"
+                    options={["Todo", "Inprogress", "Done"]}
+                    getOptionLabel={(opt) => opt}
+                    size="small"
+                    name="status"
+                    onChange={(e, v) =>
+                      handleChange({
+                        target: {
+                          name: "status",
+                          value: v,
+                        },
+                      })
+                    }
+                    renderInput={(params) => (
+                      <TextValidator
+                        {...params}
+                        fullWidth
+                        variant="outlined"
                         label="Task Status"
-                        options={["Todo", "Inprogress", "Done"]}
-                        getOptionLabel={(opt) => opt}
-                        size="small"
-                        name="status"
-                        onChange={(e, v) =>
-                          handleChange({
-                            target: {
-                              name: "status",
-                              value: v,
-                            },
-                          })
-                        }
-                        renderInput={(params) => (
-                          <TextValidator
-                            {...params}
-                            variant="outlined"
-                            label="Task Status"
-                            helperText="Task Status"
-                            value={filterData.status}
-                          />
-                        )}
+                        helperText="Task Status"
+                        value={filterData.status}
                       />
-                      <TextValidator
-                        className="w-full m-2"
-                        style={{marginRight:10}}
-                        variant="outlined"
-                        size="small"
-                        helperText="Start Date"
-                        onChange={handleChange}
-                        value={filterData.startDate}
-                        type="date"
-                        name="startDate"
-                      />
-                      <TextValidator
-                        className="w-full m-2"
-                        style={{marginRight:10}}
-                        variant="outlined"
-                        size="small"
-                        helperText="End Date"
-                        onChange={handleChange}
-                        value={filterData.endDate}
-                        type="date"
-                        name="endDate"
-                      />
-                      <Grid className={classes.test}>
-                      <Button
-                        type="submit"
-                        color="primary"
-                        variant="contained"
-                        className="m-2"
-                      >
-                        Filter
-                      </Button>
-                      <Button
-                        onClick={() => {
-                          resetFilter();
-                        }}
-                        color="secondary"
-                        variant="contained"
-                        className="m-2"
-                      >
-                        Reset
-                      </Button>
-                      </Grid>
-                    </Grid>
-                </ValidatorForm>
+                    )}
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextValidator
+                    // className="w-full m-2"
+                    // style={{ marginRight: 10 }}
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    helperText="Start Date"
+                    onChange={handleChange}
+                    value={filterData.startDate}
+                    type="date"
+                    name="startDate"
+                  />
+                </Grid>
+                <Grid item xs={3}>
+                  <TextValidator
+                    // className="w-full m-2"
+                    // style={{ marginRight: 10 }}
+                    fullWidth
+                    variant="outlined"
+                    size="small"
+                    helperText="End Date"
+                    onChange={handleChange}
+                    value={filterData.endDate}
+                    type="date"
+                    name="endDate"
+                  />
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    type="submit"
+                    fullWidth
+                    color="primary"
+                    variant="contained"
+                    // className="m-2"
+                  >
+                    Filter
+                  </Button>
+                </Grid>
+                <Grid item xs={1}>
+                  <Button
+                    fullWidth
+                    onClick={() => {
+                      resetFilter();
+                    }}
+                    color="secondary"
+                    variant="contained"
+                    // className="m-2"
+                  >
+                    Reset
+                  </Button>
+                </Grid>
               </Grid>
-            </Grid>
+            </ValidatorForm>
           </Container>
 
           {/* Cards */}
-          <Container maxWidth="md" component="main">
+          <Container
+            maxWidth="md"
+            component="main"
+            style={{ marginBottom: "50px" }}
+          >
             <Grid container spacing={5} alignItems="flex-end">
               {allTasks && allTasks.length > 0 ? (
                 allTasks.map((task) => (
                   <Grid item xs={12} sm={6} md={4}>
-                    <Card>
+                    <Card className={classes.card}>
                       <CardHeader
                         title={task.name}
                         subheader="Task"
@@ -326,7 +330,7 @@ export default function Pricing() {
                           Change Status:
                           {/* Todo | Inprogress | Done */}
                           <ToggleButtonGroup
-                            className="mt-2"
+                            style={{ marginTop: "10px" }}
                             value={task.status}
                             exclusive
                             onChange={(e, v) => handleAlignment(v, task._id)}
@@ -354,7 +358,11 @@ export default function Pricing() {
                           
                         </div>
                         {/* Date */}
-                        <div style={{ textAlign: "right", marginTop: "15px" }}>
+                        <div style={{
+                            textAlign: "right",
+                            marginTop: "15px",
+                          }}
+                        >
                           <Typography variant="p" color="textSecondary">
                             Date : {task.createdAt.split("T")[0]}
                           </Typography>
