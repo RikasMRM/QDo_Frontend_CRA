@@ -61,7 +61,7 @@ export default function NavBar() {
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="#"
+                  href="task/new"
                   className={classes.link}
                 >
                   Add New Task
@@ -69,10 +69,10 @@ export default function NavBar() {
                 <Link
                   variant="button"
                   color="textPrimary"
-                  href="#"
+                  href="/"
                   className={classes.link}
                 >
-                  View All Tasks
+                  My Tasks
                 </Link>
               </nav>
               <Button

@@ -6,6 +6,7 @@ import NotFound from "./components/common/NotFount";
 import Dashboard from "./pages/Dashboard";
 import Login from "./pages/Login";
 import Register from "./pages/Register";
+import AddTask from "./pages/AddTask";
 
 function App() {
   return (
@@ -17,6 +18,11 @@ function App() {
             path={"/"}
             exact
             component={Dashboard}
+          ></ProtectedRoute>
+          <ProtectedRoute
+            path={"/task/new"}
+            exact
+            component={AddTask}
           ></ProtectedRoute>
           <Route path={"/register"} exact component={Register}></Route>
           <Route path={"/login"} exact component={Login}></Route>

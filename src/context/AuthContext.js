@@ -27,6 +27,7 @@ export const AuthProvider = ({ children }) => {
               if (res.status == 200) {
                 setUser(res.data.user);
               } else {
+                LocalStorageService.removeItem("accessToken");
                 setUser(null);
               }
             });
@@ -35,6 +36,7 @@ export const AuthProvider = ({ children }) => {
         }
       } catch (error) {
         console.log(error);
+        LocalStorageService.removeItem("accessToken");
         setUser(null);
       }
     };
