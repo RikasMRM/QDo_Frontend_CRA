@@ -1,5 +1,9 @@
 import { Button, Typography, Grid } from "@material-ui/core";
 import React, { Component } from "react";
+// import logo from "../../../assets/404.png";
+import logo from "../../../assets/logo/logo-L.png";
+// import useStyles from "./styles";
+import "./styles.css";
 
 class NotFound extends Component {
   constructor(props) {
@@ -16,7 +20,8 @@ class NotFound extends Component {
       <div style={{ width: "100%", height: "100%" }}>
         <Grid container alignItems="center" justify="center" direction="column">
           <Grid item>
-            <Typography variant="h3" className="my-3">
+            <img src={logo} className="App-logo" alt="logo" />
+            <Typography variant="h3" className="my-3" style={{ marginTop: "20px" }}>
               Page Not Found 404
             </Typography>
           </Grid>
@@ -25,6 +30,7 @@ class NotFound extends Component {
               className="my-3"
               variant="contained"
               color="primary"
+              style={{ marginTop: "30px" }}
               onClick={this.redirectToHome}
             >
               Go Back
